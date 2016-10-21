@@ -58,7 +58,7 @@ load '_rake_configuration.rb' if File.exist?('_rake_configuration.rb')
 
 # Specify default values for variables NOT set by the user
 
-$post_ext ||= ".textile"
+$post_ext ||= ".markdown"
 $post_dir ||= "_posts/"
 $git_check ||= true
 $git_autopush ||= false
