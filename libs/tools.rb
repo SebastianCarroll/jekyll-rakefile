@@ -91,3 +91,78 @@ task :create_post, [:title, :content, :date, :category] do |t, args|
 end
 
 
+#
+# support functions for generating list of changed files
+#
+
+def list_file_changed
+  content = "Files changed since last deploy:\n"
+  IO.popen('find * -newer _last_deploy.txt -type f') do |io| 
+    while (line = io.gets) do
+      filename = line.chomp
+      if user_visible(filename) then
+        content << "* \"#{filename}\":{{site.url}}/#{file_change_ext(filename, ".html")}\n"
+      end
+    end
+  end 
+  content
+end
+
+# this is the list of files we do not want to show in changed files
+EXCLUSION_LIST = [/.*~/, /_.*/, "javascripts?", "js", /stylesheets?/, "css", "Rakefile", "Gemfile", /s[ca]ss/, /.*\.css/, /.*.js/, "bower_components", "config.rb"]
+
+# return true if filename is "visible" to the user (e.g., it is not javascript, css, ...)
+def user_visible(filename)
+  exclusion_list = Regexp.union(EXCLUSION_LIST)
+  not filename.match(exclusion_list)
+end 
+
+def file_change_ext(filename, newext)
+  if File.extname(filename) == ".textile" or File.extname(filename) == ".md" then
+    filename.sub(File.extname(filename), newext)
+  else  
+    filename
+  end
+end
+
+#
+# General support functions
+#
+
+# remove generated site
+def cleanup
+  sh 'rm -rf _site'
+  compass('clean')
+end
+
+# launch jekyll
+def jekyll(directives = '')
+  sh 'jekyll ' + directives
+end
+
+# launch compass
+def compass(command = 'compile')
+  (sh 'compass ' + command) if $compass
+end
+
+# check if there is another rake task running (in addition to this one!)
+def rake_running
+  `ps | grep 'rake' | grep -v 'grep' | wc -l`.to_i > 1
+end
+
+def git_local_diffs
+  %x{git diff --name-only} != ""
+end
+
+def git_remote_diffs branch
+  %x{git fetch}
+  %x{git rev-parse #{branch}} != %x{git rev-parse origin/#{branch}}
+end
+
+def git_repo?
+  %x{git status} != ""
+end
+
+def git_requires_attention branch
+  $git_check and git_repo? and git_remote_diffs(branch)
+end
