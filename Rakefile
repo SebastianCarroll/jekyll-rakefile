@@ -1,3 +1,9 @@
+require 'pry'
+
+# Include the lib files
+libs=File.dirname(File.readlink(__FILE__))
+Dir.glob("#{libs}/libs/*").each{|f| require f}
+
 # coding: utf-8
 task :default => :preview
 
