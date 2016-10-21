@@ -100,6 +100,14 @@ task :build, [:deployment_configuration] => :clean do |t, args|
   jekyll("build --config _config.yml,#{config_file}")
 end
 
+desc 'Create a draft post'
+task :new_draft, [:title] do
+  # Todo:
+  # - Check we are on the drafts branch
+  # - If not move to drafts branch
+  # - Error if cannot move (ie non-checked in changes)
+  # - Call create method from this method but put in _drafts not _posts
+end
 
 desc 'Build and deploy to remote server'
 task :deploy, [:deployment_configuration] => :build do |t, args|
@@ -152,17 +160,19 @@ task :deploy_github => :build do |t, args|
   File.open("_last_deploy.txt", 'w') {|f| f.write(time) }
 end
 
-desc 'Create a post'
-task :create_post, [:date, :title, :category, :content] do |t, args|
+def create_new_post(t, args)
   if args.title == nil then
     puts "Error! title is empty"
-    puts "Usage: create_post[date,title,category,content]"
+    puts "Usage: create_post[title,content,date,category]"
     puts "DATE and CATEGORY are optional"
     puts "DATE is in the form: YYYY-MM-DD; use nil or empty for today's date"
     puts "CATEGORY is a string; nil or empty for no category"
     exit 1
   end
-  if (args.date != nil and args.date != "nil" and args.date != "" and args.date.match(/[0-9]+-[0-9]+-[0-9]+/) == nil) then
+  if (args.date != nil and
+      args.date != "nil" and
+      args.date != "" and
+      args.date.match(/[0-9]+-[0-9]+-[0-9]+/) == nil) then
     puts "Error: date not understood"
     puts "Usage: create_post[date,title,category,content]"
     puts "DATE and CATEGORY are optional"
@@ -179,6 +189,7 @@ task :create_post, [:date, :title, :category, :content] do |t, args|
     exit 1
   end
 
+  $post_dir = args.dir unless args.dir.nil?
   post_title = args.title
   post_date = (args.date != "" and args.date != "nil") ? args.date : Time.new.strftime("%Y-%m-%d %H:%M:%S %Z")
 
@@ -230,6 +241,11 @@ task :create_post, [:date, :title, :category, :content] do |t, args|
     puts "A post with the same name already exists. Aborted."
   end
   # puts "You might want to: edit #{$post_dir}#{filename}"
+end
+
+desc 'Create a post'
+task :create_post, [:title, :content, :date, :category] do |t, args|
+  create_new_post(t, args)
 end
 
 
