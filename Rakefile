@@ -69,6 +69,17 @@ task :clean do
   cleanup
 end
 
+desc 'Move post from _drafts to _posts'
+task :publish, [:draft_post]  do |t, args|
+  draft_file = "_drafts/#{args.draft_post}"
+  post_file = "_posts/#{args.draft_post}"
+  if File.file?(draft_file)
+    require 'fileutils'
+    FileUtils.mv(draft_file, post_file)
+  else
+    puts "#{draft_file} doesn't exist"
+  end
+end
 
 desc 'Preview on local machine (server with --auto)'
 task :preview => :clean do
