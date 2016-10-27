@@ -77,8 +77,8 @@ def create_new_post(t, args)
     end  
 
     puts "Post created under \"#{post_dir}#{filename}\""
-    #binding.pry
-    #sh "open \"#{post_dir}#{filename}\"" if args.content == nil
+    # TODO: Find out how to customise Launchservices and change back to Open
+    sh "vim \"#{post_dir}#{filename}\"" if args.content == nil
   else
     puts "A post with the same name already exists. Aborted."
   end
