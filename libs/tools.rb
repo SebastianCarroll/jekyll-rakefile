@@ -73,6 +73,8 @@ def create_new_post(t, args)
       f.puts yaml_cat if yaml_cat != nil
       f.puts "date: #{post_date}"
       f.puts "---"
+      f.puts ""
+      f.puts "\# #{post_title}" # Make the heading and title the same as a default
       f.puts args.content if args.content != nil
     end  
 
