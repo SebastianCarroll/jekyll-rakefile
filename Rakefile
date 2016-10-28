@@ -152,9 +152,11 @@ end
 
 desc 'Build and deploy to github'
 task :deploy_github => :build do |t, args|
+  # TODO: investigate this. Looks like passing in arges without the brackets
   args.with_defaults(:deployment_configuration => 'deploy')
   config_file = "_config_#{args[:deployment_configuration]}.yml"
 
+  # TODO: What is this doing? What requires attention?
   if git_requires_attention("gh_pages") then
     puts "\n\nWarning! It seems that the local repository is not in sync with the remote.\n"
     puts "This could be ok if the local version is more recent than the remote repository.\n"
@@ -165,6 +167,7 @@ task :deploy_github => :build do |t, args|
     exit if ans != 'Y' 
   end
 
+  # TODO: Add a line here to also push submodule as it will fail the github pages build
   %x{git add -A && git commit -m "autopush by Rakefile at #{time}" && git push origin gh_pages} if $git_autopush
   
   time = Time.new
@@ -174,9 +177,9 @@ end
 desc 'Create a post listing all changes since last deploy'
 task :post_changes do |t, args|
   content = list_file_changed
+  # TODO: What is the invoke command doing here?
   Rake::Task["create_post"].invoke(Time.new.strftime("%Y-%m-%d %H:%M:%S"), "Recent Changes", nil, content)
 end
-
 
 desc 'Show the file changed since last deploy to stdout'
 task :list_changes do |t, args|

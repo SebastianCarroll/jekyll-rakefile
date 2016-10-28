@@ -97,8 +97,13 @@ end
 # support functions for generating list of changed files
 #
 
+# TODO: Changed to list_files_changed - make plural for clarity
 def list_file_changed
   content = "Files changed since last deploy:\n"
+  # TODO: Refactor to use File.readlines.
+  # NOTE: May not be able to as opening command not file
+  # TODO: Refactor to use inject or join
+  # TODO: Actually do I use any of this?
   IO.popen('find * -newer _last_deploy.txt -type f') do |io| 
     while (line = io.gets) do
       filename = line.chomp
