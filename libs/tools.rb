@@ -85,6 +85,16 @@ def create_new_post(t, args)
     puts "A post with the same name already exists. Aborted."
   end
   # puts "You might want to: edit #{$post_dir}#{filename}"
+
+  commit_content post_title
+end
+
+def commit_content(title)
+  if $post_dir.downcase.include? 'drafts'
+    # TODO: Break this out to improve readability somehow
+    # Must have cd and cd .. in same sh command as sh wont maintain dir over calls
+    sh "cd _drafts && git add -A && git ci -m \"Add new draft: #{title}\" && cd .."
+  end
 end
 
 desc 'Create a post'
