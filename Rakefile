@@ -177,7 +177,7 @@ end
 desc 'Create a post listing all changes since last deploy'
 task :post_changes do |t, args|
   content = list_file_changed
-  # TODO: What is the invoke command doing here?
+  # Create a post with changes since last push
   Rake::Task["create_post"].invoke(Time.new.strftime("%Y-%m-%d %H:%M:%S"), "Recent Changes", nil, content)
 end
 
