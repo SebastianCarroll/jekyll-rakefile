@@ -142,9 +142,25 @@ def file_change_ext(filename, newext)
   end
 end
 
+# Lists all unpublished posts
+def unpublished
+  drafts = filenames_in "_drafts/*"
+  pubs = filenames_in "_posts/*"
+  # return filenames in drafts but not in pubs
+  (drafts - pubs).each{|f| puts f unless f == "README.md" }
+end
+
 #
 # General support functions
 #
+
+# Get filenames in directory
+def filenames_in(dir)
+  Dir.glob(dir)
+     .select{|f| File.file? f}
+     .map{|f| File.basename f}
+     .to_set
+end
 
 # remove generated site
 def cleanup

@@ -120,6 +120,11 @@ task :new_draft, [:title, :content] do |t, args|
   create_new_post(t, args)
 end
 
+desc 'List unpublished drafts'
+task :unpub do
+  unpublished
+end
+
 desc 'Build and deploy to remote server'
 task :deploy, [:deployment_configuration] => :build do |t, args|
   args.with_defaults(:deployment_configuration => 'deploy')
