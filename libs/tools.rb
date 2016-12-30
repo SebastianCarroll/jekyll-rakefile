@@ -54,8 +54,8 @@ def create_new_post(t, args)
   i = 1
   while File.exists?(post_dir + filename) do
     filename = post_date[0..9] + "-" +
-               File.basename(slugify(post_title)) + "-" + i.to_s +
-               $post_ext 
+      File.basename(slugify(post_title)) + "-" + i.to_s +
+      $post_ext
     i += 1
   end
 
@@ -202,9 +202,9 @@ end
 # Get filenames in directory
 def filenames_in(dir)
   Dir.glob(dir)
-     .select{|f| File.file? f}
-     .map{|f| File.basename f}
-     .to_set
+    .select{|f| File.file? f}
+    .map{|f| File.basename f}
+    .to_set
 end
 
 # remove generated site
