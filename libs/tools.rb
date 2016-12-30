@@ -82,18 +82,19 @@ def create_new_post(t, args)
   end
   # puts "You might want to: edit #{$post_dir}#{filename}"
 
-  commit_content post_title
+  commit_new_content post_title
 end
 
-def commit_content(title)
+def commit_new_content(title)
   if $post_dir.downcase.include? 'drafts'
     # TODO: Break this out to improve readability somehow
+    # TODO: Do I want to be commiting all here?
     # Must have cd and cd .. in same sh command as sh wont maintain dir over calls
     sh "cd _drafts && git add -A && git ci -m \"Add new draft: #{title}\" && cd .."
   end
 end
 
-def commit_draft(title)
+def commit_changed_draft(title)
   puts "Commiting draft version"
   sh("cd _drafts; git add #{title}; git ci -m \"Published new version of #{title}\"")
 end

@@ -73,7 +73,7 @@ desc 'Copy post from _drafts to _posts. All work is done in _drafts(even updates
 task :publish, [:draft_post]  do |t, args|
   draft_file = "_drafts/#{args.draft_post}"
   if File.file?(draft_file)
-    commit_draft(args.draft_post)
+    commit_changed_draft(args.draft_post)
     publish_draft(draft_file)
    else
     puts "#{draft_file} doesn't exist"
