@@ -72,13 +72,10 @@ end
 desc 'Copy post from _drafts to _posts. All work is done in _drafts(even updates/fixes) and then new versions are published to _posts'
 task :publish, [:draft_post]  do |t, args|
   draft_file = "_drafts/#{args.draft_post}"
-  post_file = "_posts/#{args.draft_post}"
   if File.file?(draft_file)
-    require 'fileutils'
-    FileUtils.cp(draft_file, post_file)
-    sh("git add #{post_file}")
-    sh("git ci -m \"Published new version of #{post_file}\"")
-  else
+    commit_draft(args.draft_post)
+    publish_draft(draft_file)
+   else
     puts "#{draft_file} doesn't exist"
   end
 end

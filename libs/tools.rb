@@ -97,6 +97,20 @@ def commit_content(title)
   end
 end
 
+def commit_draft(title)
+  puts "Commiting draft version"
+  sh("cd _drafts; git add #{title}; git ci -m \"Published new version of #{title}\"")
+end
+
+def publish_draft(draft_file)
+  puts "Commiting published version"
+  post_file = "_posts/#{args.draft_post}"
+  require 'fileutils'
+  FileUtils.cp(draft_file, post_file)
+  sh("git add #{post_file}")
+  sh("git ci -m \"Published new version of #{post_file}\"")
+end
+
 desc 'Create a post'
 task :create_post, [:title, :content, :date, :category] do |t, args|
   create_new_post(t, args)
