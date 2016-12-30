@@ -1,7 +1,3 @@
-def test_funtion
-  puts 'test'
-end
-
 def create_new_post(t, args)
   if args.title == nil then
     puts "Error! title is empty"
