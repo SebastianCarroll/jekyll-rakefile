@@ -1,59 +1,12 @@
 # Include the lib files
-libs=File.dirname(File.readlink(__FILE__))
-Dir.glob("#{libs}/libs/*").each{|f| require f}
+cur_dir=File.dirname(File.readlink(__FILE__))
+Dir.glob("#{cur_dir}/libs/*").each{|f| require f}
 
 # coding: utf-8
 task :default => :preview
-
-# CONFIGURATION VARIABLES (on top of those defined by Jekyll in _config(_deploy).yml)
-#
-# PREVIEWING
-# If your project is based on compass and you want compass to be invoked
-# by the script, set the $compass variable to true
-#
-# $compass = false # default
-# $compass = true  # if you wish to run compass as well
-#
-# Notice that Jekyll 2.0 supports sass natively, so you might want to have a look
-# at the functions provided by Jekyll instead of using the functions provided here.
-#
-# MANAGING POSTS
-# Set the extension for new posts (defaults to .textile, if not set)
-#
-# $post_ext = ".textile"  # default
-# $post_ext = ".md"       # if you prefer markdown
-#
-# Set the location of new posts (defaults to "_posts/", if not set).
-# Please, terminate with a slash:
-#
-# $post_dir = "_posts/"
-#
-# MANAGING MULTI-USER WORK
-# If you are using git to manage the sources, you might want to check the repository
-# is up-to-date with the remote branch, before deploying.  In fact---when this is not the
-# case---you end up deploying a previous version of your website.
-#
-# The following variable determines whether you want to check the git repository is
-# up-to-date with the remote branch and, if not, issue a warning.
-#
-# $git_check = true
-#
-# It is safe to leave the variable set to true, even if you do not manage your sources
-# with git.
-#
-# The following variable controls whether we push to the remote branch after deployment,
-# committing all uncommitted changes
-#
-# $git_autopush = false
-#
-# If set to true, the sources have to be managed by git or an error message will be issued.
-#
-# ... or load them from the configuration file, e.g.:
-# 
+ 
 load '_rake-configuration.rb' if File.exist?('_rake-configuration.rb')
 load '_rake_configuration.rb' if File.exist?('_rake_configuration.rb')
-
-# Specify default values for variables NOT set by the user
 
 $post_ext ||= ".markdown"
 $post_dir ||= "_posts/"
