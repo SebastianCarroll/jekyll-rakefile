@@ -72,7 +72,7 @@ end
 
 desc 'Copies latest screenshot into image directory and creates markdown includer'
 task :insert_image do
-  ScreenCaps.insert
+  ScreenCap.new
 end
 
 desc 'List unpublished drafts'
