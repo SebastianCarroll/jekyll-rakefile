@@ -80,17 +80,16 @@ task :insert_image do
   # - Move that to the images dir here
   # 1. Get path
   # 2. Prompt for rename
-  require 'pry'
   puts "What would you like to call the image (no ext)?"
   name = $stdin.gets.strip
   # 3. Move old file to new file with file name
   # TODO: Make the filename snake but the reference camel
-  require 'fileutils'
   ext = image.split('.').last
 
   new_file = "images/#{name}.#{ext}"
   new_file_path = File.join(Dir.pwd, new_file)
 
+  require 'fileutils'
   FileUtils.mv(image, new_file)
   # - Echo markdown string to copy and paste into md
   puts "![#{name}]({{ site.baseurl }}/#{new_file})"
