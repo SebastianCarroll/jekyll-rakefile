@@ -265,8 +265,7 @@ class ScreenCap
   def move_image(image, name)
     ext = image.split('.').last
 
-    # TODO: Make the filename snake but the reference camel
-    new_file = "images/#{name}.#{ext}"
+    new_file = "images/#{slugify(name)}.#{ext}"
     new_file_path = File.join(Dir.pwd, new_file)
 
     require 'fileutils'
