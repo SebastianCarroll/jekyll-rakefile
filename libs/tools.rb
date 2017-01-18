@@ -43,11 +43,6 @@ def create_new_post(t, args)
     yaml_cat = post_category ? "category: #{post_category}\n" : nil
   end
 
-  def slugify (title)
-    # strip characters and whitespace to create valid filenames, also lowercase
-    return title.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
-  end
-
   filename = post_date[0..9] + "-" + slugify(post_title) + $post_ext
 
   # generate a unique filename appending a number
@@ -206,6 +201,11 @@ def filenames_in(dir)
     .select{|f| File.file? f}
     .map{|f| File.basename f}
     .to_set
+end
+
+def slugify (title)
+  # strip characters and whitespace to create valid filenames, also lowercase
+  return title.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
 end
 
 # remove generated site
