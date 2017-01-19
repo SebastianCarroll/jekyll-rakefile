@@ -90,13 +90,16 @@ def commit_new_content(title)
 end
 
 def commit_changed_draft(title)
+  # TODO: This fails if nothing to commit.
+  # Not a big deal but if code further down the line fails, the changes will be commited however
+  # the future code cannot be re-run. Could add a try catch?
   puts "Commiting draft version"
   sh("cd _drafts; git add #{title}; git ci -m \"Published new version of #{title}\"")
 end
 
 def publish_draft(draft_file)
   puts "Commiting published version"
-  post_file = "_posts/#{args.draft_post}"
+  post_file = "_posts/#{File.basename draft_file}"
   require 'fileutils'
   FileUtils.cp(draft_file, post_file)
   sh("git add #{post_file}")
