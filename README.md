@@ -34,3 +34,5 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/jekyll_rake. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
+## TODO:
+* Add method to quickly edit drafts. Currently I have to ls \_drafts, copy latest (requires mouse) and type vim \_drafts/ then copy in the filename. Not the hardest thing in the world but could maybe be simplified with rake edit. Enter for latest or number for other options.

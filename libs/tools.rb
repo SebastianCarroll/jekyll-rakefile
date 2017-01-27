@@ -248,32 +248,3 @@ end
 def git_requires_attention branch
   $git_check and git_repo? and git_remote_diffs(branch)
 end
-
-# Class to handle inserting screen shots into markdown
-class ScreenCap
-  def initialize()
-    move_image(get_latest_image, prompt_for_name)
-  end
-
-  # TODO: make 'last' one date time rather than filename
-  def get_latest_image()
-    Dir.glob("#{Dir.home}/Desktop/Screen Shot*").last
-  end
-
-  def prompt_for_name()
-    puts "What would you like to call the image (no ext)?"
-    name = $stdin.gets.strip
-  end
-
-  def move_image(image, name)
-    ext = image.split('.').last
-
-    new_file = "images/#{slugify(name)}.#{ext}"
-    new_file_path = File.join(Dir.pwd, new_file)
-
-    require 'fileutils'
-    FileUtils.mv(image, new_file)
-    puts "![#{name}]({{ site.baseurl }}/#{new_file})"
-  end
-
-end

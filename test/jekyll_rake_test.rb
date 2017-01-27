@@ -1,4 +1,6 @@
 require 'test_helper'
+require 'jekyll_rake'
+require 'pry'
 
 class JekyllRakeTest < Minitest::Test
   def test_that_it_has_a_version_number
@@ -6,6 +8,6 @@ class JekyllRakeTest < Minitest::Test
   end
 
   def test_it_does_something_useful
-    assert false
+    JekyllRake::ScreenCap.new("test_in", "test_out")
   end
 end
