@@ -1,6 +1,6 @@
 # Include the lib files
 cur_dir=File.dirname(File.readlink(__FILE__))
-Dir.glob("#{cur_dir}/libs/*").each{|f| require f}
+Dir.glob("./#{cur_dir}/libs/*").each{|f| require f}
 
 # coding: utf-8
 task :default => :preview
