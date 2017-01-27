@@ -1,5 +1,8 @@
-require "jekyll_rake/version"
+# TODO: This is an issue with load paths. Need to Fix this
+#require "jekyll_rake/version"
 
 module JekyllRake
-  # Your code goes here...
+  def test()
+    puts "test!!!"
+  end
 end
