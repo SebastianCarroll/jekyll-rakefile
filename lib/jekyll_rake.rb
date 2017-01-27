@@ -20,8 +20,14 @@ module JekyllRake
     end
 
     # TODO: make 'last' one date time rather than filename
-    def get_latest_image(img_dir)
+    def get_latest_image()
       @latest_image = Dir.glob("#{@in_dir}/Screen Shot*").last
+      if @latest_image.nil?
+        msg = "No images available in directory #{@in_dir}"
+        puts "Error: " + msg
+        # TODO: Make this exception more meaningful
+        raise Exception.new(msg)
+      end
     end
 
     def prompt_for_name()
