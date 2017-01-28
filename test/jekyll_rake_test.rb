@@ -37,5 +37,7 @@ class JekyllRakeTest < Minitest::Test
     assert(File.exists? expected)
 
     # clean up - remove dirs
+    FileUtils.rm_rf in_dir
+    FileUtils.rm_rf out_dir
   end
 end
