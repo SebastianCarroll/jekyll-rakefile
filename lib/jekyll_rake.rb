@@ -10,9 +10,10 @@ module JekyllRake
 
   # Handle inserting screen shots into markdown and copying those to the images dir
   class ScreenCap
-    def initialize(in_dir, out_dir)
+    def initialize(in_dir, out_dir, name=nil)
       @in_dir = in_dir
       @out_dir = out_dir
+      @name = name
 
       get_latest_image
       prompt_for_name
@@ -32,7 +33,7 @@ module JekyllRake
 
     def prompt_for_name()
       puts "What would you like to call the image (no ext)?"
-      @name = $stdin.gets.strip
+      @name ||= $stdin.gets.strip
     end
 
     def move_image()
