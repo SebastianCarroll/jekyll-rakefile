@@ -30,7 +30,9 @@ end
 
 desc 'Copies latest screenshot into image directory and creates markdown includer'
 task :insert_image do
-  JekyllRake::ScreenCap.new
+  in_dir = "#{Dir.home}/Desktop"
+  out_dir = "images"
+  JekyllRake::ScreenCap.new(in_dir, out_dir)
 end
 
 desc 'List unpublished drafts'

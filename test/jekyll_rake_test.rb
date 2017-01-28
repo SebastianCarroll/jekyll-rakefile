@@ -28,6 +28,12 @@ class JekyllRakeTest < Minitest::Test
 
     # setup test files
     File.open(File.join(in_dir, filename), 'w') {|f| f.puts content}
+    File.open(File.join(in_dir, "Screen Shot 2016-06-29 at 2.54.13 PM.png"), 'w') {|f| f.puts content} # Second
+    File.open(File.join(in_dir, "Screen Shot 2016-06-29 at 2.53.14 PM.png"), 'w') {|f| f.puts content} # Minute
+    File.open(File.join(in_dir, "Screen Shot 2016-06-29 at 1.54.14 PM.png"), 'w') {|f| f.puts content} # Hour
+    File.open(File.join(in_dir, "Screen Shot 2016-06-28 at 2.54.14 PM.png"), 'w') {|f| f.puts content} # Dawy
+    File.open(File.join(in_dir, "Screen Shot 2016-05-29 at 2.54.14 PM.png"), 'w') {|f| f.puts content} # Month
+    File.open(File.join(in_dir, "Screen Shot 2015-06-29 at 2.54.14 PM.png"), 'w') {|f| f.puts content} # year
 
     # Run screencap
     JekyllRake::ScreenCap.new(in_dir, out_dir, new_filename)
