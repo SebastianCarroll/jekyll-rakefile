@@ -33,8 +33,8 @@ class JekyllRakeTest < Minitest::Test
     JekyllRake::ScreenCap.new(in_dir, out_dir, new_filename)
 
     # check file moved
-    expected = File.join(out_dir, new_filename)
-    assert(File.exists? expected)
+    expected = File.join(out_dir, new_filename) + File.extname(filename)
+    assert(File.exists?(expected), "File not foind in correct place")
 
     # clean up - remove dirs
     FileUtils.rm_rf in_dir

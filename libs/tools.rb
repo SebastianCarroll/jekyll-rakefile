@@ -43,13 +43,13 @@ def create_new_post(t, args)
     yaml_cat = post_category ? "category: #{post_category}\n" : nil
   end
 
-  filename = post_date[0..9] + "-" + slugify(post_title) + $post_ext
+  filename = post_date[0..9] + "-" + JekyllRake::Utils.slugify(post_title) + $post_ext
 
   # generate a unique filename appending a number
   i = 1
   while File.exists?(post_dir + filename) do
     filename = post_date[0..9] + "-" +
-      File.basename(slugify(post_title)) + "-" + i.to_s +
+      File.basename(JekyllRake::Utils.slugify(post_title)) + "-" + i.to_s +
       $post_ext
     i += 1
   end
@@ -204,11 +204,6 @@ def filenames_in(dir)
     .select{|f| File.file? f}
     .map{|f| File.basename f}
     .to_set
-end
-
-def slugify (title)
-  # strip characters and whitespace to create valid filenames, also lowercase
-  return title.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
 end
 
 # remove generated site
