@@ -1,15 +1,10 @@
-# TODO: This is an issue with load paths. Need to Fix this
-#require "jekyll_rake/version"
+# TODO: Is this a good idea? Seems like I just don't uderstand ruby class loading
+cur_dir = File.dirname __FILE__
+require "#{cur_dir}/jekyll_rake/version"
+require "#{cur_dir}/jekyll_rake/utils"
 
 
 module JekyllRake
-  class Utils
-    def self.slugify (title)
-      # strip characters and whitespace to create valid filenames, also lowercase
-      return title.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
-    end
-  end
-
   # Handle inserting screen shots into markdown and copying those to the images dir
   class ScreenCap
     def initialize(in_dir, out_dir, name=nil)
