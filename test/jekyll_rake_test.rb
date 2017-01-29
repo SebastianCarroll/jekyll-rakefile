@@ -1,6 +1,4 @@
 require 'test_helper'
-require 'jekyll_rake'
-require 'pry'
 
 class JekyllRakeTest < Minitest::Test
   def test_that_it_has_a_version_number
