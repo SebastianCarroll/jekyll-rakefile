@@ -36,3 +36,4 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 
 ## TODO:
 * Add method to quickly edit drafts. Currently I have to ls \_drafts, copy latest (requires mouse) and type vim \_drafts/ then copy in the filename. Not the hardest thing in the world but could maybe be simplified with rake edit. Enter for latest or number for other options.
+* Combine the README's
