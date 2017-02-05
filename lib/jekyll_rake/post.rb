@@ -1,13 +1,20 @@
 module JekyllRake
   class Post 
-    class << self
-      def create(t, args, dir)
+    #class << self
+    #  def create(t, args, dir)
+    attr_reader :file, :content, :title
+
+    def initialize(t, args, dir)
         check_title(args.title)
         check_date(args.date)
 
         post_title = JekyllRake::Utils.titleise(args.title)
+
+        # TODO: What is this? Too complex
         post_date = (args.date != "" and args.date != "nil" and not args.date.nil?) ? args.date : Time.new.strftime("%Y-%m-%d %H:%M:%S %Z")
 
+        # TODO: Whats the category prefix? Is that useful? Could be something that has regressed
+        # TODO: If necessary this needs to be a separate method
         # the destination directory is <<category>>/dir, if category is non-nil
         # and the directory exists; dir otherwise (a category tag is added in
         # the post body, in this case)
@@ -20,8 +27,10 @@ module JekyllRake
           yaml_cat = post_category ? "category: #{post_category}\n" : nil
         end
 
+        # TODO: Global Variable
         filename = post_date[0..9] + "-" + JekyllRake::Utils.slugify(post_title) + $post_ext
 
+        # TODO: Break this out and refactor
         # generate a unique filename appending a number
         i = 1
         while File.exists?(post_dir + filename) do
@@ -31,6 +40,7 @@ module JekyllRake
           i += 1
         end
 
+        # TODO: Remove unecessary condition
         # the condition is not really necessary anymore (since the previous
         # loop ensures the file does not exist)
         if not File.exists?(post_dir + filename) then
@@ -52,10 +62,10 @@ module JekyllRake
         else
           #puts "A post with the same name already exists. Aborted."
         end
-        # puts "You might want to: edit #{dir}#{filename}"
 
-        #commit_new_content post_title
-        [post_title, args.content, File.join(post_dir, filename)]
+        @content = args.content
+        @file = File.join(post_dir, filename)
+        @title = post_title
       end
 
       def check_title(title)
@@ -101,4 +111,4 @@ module JekyllRake
       end
     end
   end
-end
+#end

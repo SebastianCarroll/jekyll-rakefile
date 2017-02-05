@@ -23,9 +23,10 @@ end
 
 desc 'Create a draft post'
 task :new_draft, [:title, :content] do |t, args|
-  title, content, file = JekyllRake::Post.create(t, args, "_drafts/")
-  sh "vim \"#{file}\"" if content.nil? # == nil
-  commit_new_content title, "_drafts"
+  post = JekyllRake::Post.new(t, args, "_drafts/")
+  # TODO: work out how to do shell calls inside the object
+  sh "vim \"#{post.file}\"" if post.content.nil?
+  commit_new_content post.title, "_drafts"
 end
 
 desc 'Copies latest screenshot into image directory and creates markdown includer'
