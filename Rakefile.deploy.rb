@@ -26,7 +26,7 @@ task :new_draft, [:title, :content] do |t, args|
   post = JekyllRake::Post.new(t, args, "_drafts/")
   # TODO: work out how to do shell calls inside the object
   sh "vim \"#{post.file}\"" if post.content.nil?
-  commit_new_content post.title, "_drafts"
+  #commit_new_content post.title, "_drafts"
 end
 
 desc 'Copies latest screenshot into image directory and creates markdown includer'
