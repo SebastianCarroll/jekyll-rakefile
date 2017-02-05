@@ -47,14 +47,15 @@ module JekyllRake
           end  
 
           puts "Post created under \"#{post_dir}#{filename}\""
-          # TODO: Find out how to customise Launchservices and change back to Open
-          sh "vim \"#{post_dir}#{filename}\"" if args.content == nil
+          #" TODO: Find out how to customise Launchservices and change back to Open
+          #sh "vim \"#{post_dir}#{filename}\"" if args.content == nil
         else
-          puts "A post with the same name already exists. Aborted."
+          #puts "A post with the same name already exists. Aborted."
         end
         # puts "You might want to: edit #{dir}#{filename}"
 
-        commit_new_content post_title
+        #commit_new_content post_title
+        [post_title, args.content, File.join(post_dir, filename)]
       end
 
       def check_title(title)
@@ -69,16 +70,16 @@ module JekyllRake
       end
 
       def check_date(date)
-        if (date != nil and
-            date != "nil" and
-            date != "" and
-            date.match(/[0-9]+-[0-9]+-[0-9]+/) == nil) then
+        if (date.nil? &&
+            date.empty? &&
+            date.match(/[0-9]+-[0-9]+-[0-9]+/).nil?) then
+          puts "Error: Date not understood"
+          usage
           exit 1
         end
       end
 
       def usage
-        puts "Error: date not understood"
         puts "Usage: create_post[date,title,category,content]"
         puts "DATE and CATEGORY are optional"
         puts "DATE is in the form: YYYY-MM-DD; use nil or the empty string for today's date"

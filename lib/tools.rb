@@ -1,5 +1,5 @@
-def commit_new_content(title)
-  if $post_dir.downcase.include? 'drafts'
+def commit_new_content(title, dir)
+  if dir.downcase.include? 'drafts'
     # TODO: Break this out to improve readability somehow
     # TODO: Do I want to be commiting all here?
     # Must have cd and cd .. in same sh command as sh wont maintain dir over calls
