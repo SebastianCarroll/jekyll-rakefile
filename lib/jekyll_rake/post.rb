@@ -70,9 +70,14 @@ module JekyllRake
       end
 
       def check_date(date)
-        if (date.nil? &&
-            date.empty? &&
-            date.match(/[0-9]+-[0-9]+-[0-9]+/).nil?) then
+        # This looks cleaner but logic is incorrect
+        #if (date.nil? ||
+        #    date.empty? ||
+        #    date.match(/[0-9]+-[0-9]+-[0-9]+/).nil?) then
+        if (date != nil and
+            date != "nil" and
+            date != "" and
+            date.match(/[0-9]+-[0-9]+-[0-9]+/) == nil) then
           puts "Error: Date not understood"
           usage
           exit 1
