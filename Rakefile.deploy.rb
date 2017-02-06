@@ -1,7 +1,7 @@
 # Include the lib files
 cur_dir=File.dirname(File.readlink(__FILE__))
 Dir.glob("./#{cur_dir}/libs/*").each{|f| require f}
-Dir.glob("./#{cur_dir}/lib/*").select{|f| File.file? f}.each{|f| require f}
+Dir.glob("./#{cur_dir}/lib/**/*").select{|f| File.file? f}.each{|f| require f}
 
 # coding: utf-8
 task :default => :preview
@@ -23,9 +23,10 @@ end
 
 desc 'Create a draft post'
 task :new_draft, [:title, :content] do |t, args|
-  # TODO: This global var is a terrible way of setting the directory.
-  $post_dir = "_drafts/"
-  create_new_post(t, args)
+  post = JekyllRake::Post.new(t, args, "_drafts/")
+  # TODO: work out how to do shell calls inside the object
+  sh "vim \"#{post.file}\"" if post.content.nil?
+  #commit_new_content post.title, "_drafts"
 end
 
 desc 'Copies latest screenshot into image directory and creates markdown includer'

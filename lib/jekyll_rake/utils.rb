@@ -10,5 +10,10 @@ module JekyllRake
       # strip characters and whitespace to create valid filenames, also lowercase
       return title.downcase.strip.gsub(' ', '_').gsub(/[^\w-]/, '')
     end
+    
+    def self.titleise(input)
+      require 'titleize'
+      input.titleize
+    end
   end
 end
