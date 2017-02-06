@@ -4,3 +4,6 @@ require 'jekyll_rake'
 require 'minitest/autorun'
 
 require 'pry'
+
+require 'simplecov'
+SimpleCov.start
