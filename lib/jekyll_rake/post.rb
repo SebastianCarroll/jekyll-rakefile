@@ -1,7 +1,5 @@
 module JekyllRake
   class Post 
-    #class << self
-    #  def create(t, args, dir)
     attr_reader :file, :content, :title
 
     def initialize(t, args, dir)
@@ -10,15 +8,44 @@ module JekyllRake
 
       post_title = JekyllRake::Utils.titleise(args.title)
 
-      # TODO: What is this? Too complex
-      post_date = (args.date != "" and args.date != "nil" and not args.date.nil?) ? args.date : Time.new.strftime("%Y-%m-%d %H:%M:%S %Z")
+      post_date = get_post_date(args.date)
 
       set_post_dir_and_yaml_cat(args.category, dir)
 
+      filename = get_unique_filename(post_title, post_date)
+
+      write_new_draft(filename, post_title, post_date, args)
+
+      @content = args.content
+      @file = File.join(@post_dir, filename)
+      @title = post_title
+    end
+
+    def write_new_draft(filename, post_title, post_date, args)
+      File.open(@post_dir + filename, 'w') do |f|
+        f.puts "---"
+        f.puts "title: \"#{post_title}\""
+        f.puts "layout: default"
+        f.puts @yaml_cat if @yaml_cat != nil
+        f.puts "date: #{post_date}"
+        f.puts "---"
+        f.puts ""
+        f.puts "\# #{post_title}" # Make the heading and title the same as a default
+        f.puts args.content if args.content != nil
+      end 
+      puts "Post created under \"#{@post_dir}#{filename}\""
+    end
+
+    def get_post_date(date)
+      # TODO: What is this? Too complex
+      post_date = (date != "" and date != "nil" and not date.nil?) ? date : Time.new.strftime("%Y-%m-%d %H:%M:%S %Z")
+    end
+
+    def  get_unique_filename(post_title, post_date)
       # TODO: Global Variable
       filename = post_date[0..9] + "-" + JekyllRake::Utils.slugify(post_title) + $post_ext
 
-      # TODO: Break this out and refactor
+      # TODO: refactor - very difficult to understand without the comment
       # generate a unique filename appending a number
       i = 1
       while File.exists?(@post_dir + filename) do
@@ -27,33 +54,7 @@ module JekyllRake
           $post_ext
         i += 1
       end
-
-      # TODO: Remove unecessary condition
-      # the condition is not really necessary anymore (since the previous
-      # loop ensures the file does not exist)
-      if not File.exists?(@post_dir + filename) then
-        File.open(@post_dir + filename, 'w') do |f|
-          f.puts "---"
-          f.puts "title: \"#{post_title}\""
-          f.puts "layout: default"
-          f.puts @yaml_cat if @yaml_cat != nil
-          f.puts "date: #{post_date}"
-          f.puts "---"
-          f.puts ""
-          f.puts "\# #{post_title}" # Make the heading and title the same as a default
-          f.puts args.content if args.content != nil
-        end  
-
-        puts "Post created under \"#{@post_dir}#{filename}\""
-        #" TODO: Find out how to customise Launchservices and change back to Open
-        #sh "vim \"#{@post_dir}#{filename}\"" if args.content == nil
-      else
-        #puts "A post with the same name already exists. Aborted."
-      end
-
-      @content = args.content
-      @file = File.join(@post_dir, filename)
-      @title = post_title
+      filename
     end
 
     def  set_post_dir_and_yaml_cat(category, dir)
@@ -113,4 +114,3 @@ module JekyllRake
     end
   end
 end
-#end
