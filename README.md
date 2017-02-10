@@ -1,5 +1,8 @@
 # JekyllRake
 [![Build Status](https://travis-ci.org/SebastianCarroll/jekyll-rakefile.svg?branch=master)](https://travis-ci.org/SebastianCarroll/jekyll-rakefile)
+[![Code Climate](https://codeclimate.com/github/SebastianCarroll/jekyll-rakefile/badges/gpa.svg)](https://codeclimate.com/github/SebastianCarroll/jekyll-rakefile)
+[![Test Coverage](https://codeclimate.com/github/SebastianCarroll/jekyll-rakefile/badges/coverage.svg)](https://codeclimate.com/github/SebastianCarroll/jekyll-rakefile/coverage)
+[![Issue Count](https://codeclimate.com/github/SebastianCarroll/jekyll-rakefile/badges/issue_count.svg)](https://codeclimate.com/github/SebastianCarroll/jekyll-rakefile)
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/jekyll_rake`. To experiment with that code, run `bin/console` for an interactive prompt.
 
