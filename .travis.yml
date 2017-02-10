@@ -3,7 +3,9 @@ language: ruby
 rvm:
   - 2.2.0
 before_install: gem install bundler -v 1.13.6
-script: bundle exec rake
+script: 
+  - bundle exec rake
+  - CODECLIMATE_REPO_TOKEN=b582b907cec528b731bc9635a30727787623fb7c7d1e20f58f96497a254d3feb bundle exec codeclimate-test-reporter 
 addons:
   code_climate:
     repo_token: b582b907cec528b731bc9635a30727787623fb7c7d1e20f58f96497a254d3feb
