@@ -9,7 +9,7 @@ task :default => :preview
 load '_rake-configuration.rb' if File.exist?('_rake-configuration.rb')
 load '_rake_configuration.rb' if File.exist?('_rake_configuration.rb')
 
-$post_ext ||= ".markdown"
+$post_ext ||= ".md"
 $post_dir ||= "_posts/"
 $git_check ||= true
 $git_autopush ||= false
