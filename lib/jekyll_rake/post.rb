@@ -33,11 +33,12 @@ module JekyllRake
     end
 
     def  get_unique_filename()
-      # TODO: Global Variable
-      filename = @date[0..9] + "-" + JekyllRake::Utils.slugify(@title) + $post_ext
+      # TODO: Remove Global Variable reliance
+      filename = JekyllRake::Utils.slugify(@title) + $post_ext
 
       # TODO: refactor - very difficult to understand without the comment
       # generate a unique filename appending a number
+      # TODO: Maybe just throw an error if that name already exists? This is what seems to be done elsewhere 
       i = 1
       while File.exists?(@post_dir + filename) do
         filename = @date[0..9] + "-" +
