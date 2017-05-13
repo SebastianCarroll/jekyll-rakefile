@@ -17,11 +17,18 @@ end
 
 def publish_draft(draft_file)
   puts "Commiting published version"
-  post_file = "_posts/#{File.basename draft_file}"
+  filename = File.basename draft_file
+  post_file = "_posts/#{prepend_date filename}"
   require 'fileutils'
-  FileUtils.cp(draft_file, post_file)
+  FileUtils.mv(draft_file, post_file)
   sh("git add #{post_file}")
   sh("git ci -m \"Published new version of #{post_file}\"")
+end
+
+# Looks like date: in front matter overrides date of filename anyway
+# We could just put the publish date here?
+def prepend_date(filename)
+  Time.new.strftime("%Y-%m-%d") + '-' + filename
 end
 
 desc 'Create a post'
