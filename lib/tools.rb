@@ -3,16 +3,16 @@ def commit_new_content(title, dir)
     # TODO: Break this out to improve readability somehow
     # TODO: Do I want to be commiting all here?
     # Must have cd and cd .. in same sh command as sh wont maintain dir over calls
-    sh "cd _drafts && git add -A && git ci -m \"Add new draft: #{title}\" && cd .."
+    sh "cd #{dir} && git add -A && git ci -m \"Add new draft: #{title}\" && cd .."
   end
 end
 
-def commit_changed_draft(title)
+def commit_changed_draft(title, draft_folder)
   # TODO: This fails if nothing to commit.
   # Not a big deal but if code further down the line fails, the changes will be commited however
   # the future code cannot be re-run. Could add a try catch?
   puts "Commiting draft version"
-  sh("cd _drafts; git add #{title}; git ci -m \"Published new version of #{title}\"")
+  sh("cd #{draft_folder}; git add #{title}; git ci -m \"Published new version of #{title}\"")
 end
 
 def publish_draft(draft_file)
@@ -112,8 +112,8 @@ def file_change_ext(filename, newext)
 end
 
 # Lists all unpublished posts
-def unpublished
-  drafts = filenames_in "_drafts/*"
+def unpublished(draft_folder)
+  drafts = filenames_in "#{draft_folder}/*"
   pubs = filenames_in "_posts/*"
   # return filenames in drafts but not in pubs
   (drafts - pubs).each{|f| puts f unless f == "README.md" }

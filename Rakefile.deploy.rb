@@ -38,14 +38,14 @@ end
 
 desc 'List unpublished drafts'
 task :unpub do
-  unpublished
+  unpublished "_drafts"
 end
 
 desc 'Copy post from _drafts to _posts. All work is done in _drafts(even updates/fixes) and then new versions are published to _posts'
 task :publish, [:draft_post]  do |t, args|
   draft_file = "_drafts/#{args.draft_post}"
   if File.file?(draft_file)
-    commit_changed_draft(args.draft_post)
+    commit_changed_draft(args.draft_post, "_drafts")
     publish_draft(draft_file)
   else
     puts "#{draft_file} doesn't exist"
