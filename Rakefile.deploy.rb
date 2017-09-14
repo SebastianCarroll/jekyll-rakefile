@@ -22,7 +22,7 @@ task :clean do
 end
 
 desc 'Create a draft post'
-task :new_draft, [:title, :content] do |t, args|
+task :new, [:title, :content] do |t, args|
   post = JekyllRake::Post.new(t, args, "_drafts/")
   # TODO: work out how to do shell calls inside the object
   sh "vim \"#{post.file}\"" if post.content.nil?
@@ -45,7 +45,7 @@ desc 'Copy post from _drafts to _posts. All work is done in _drafts(even updates
 task :publish, [:draft_post]  do |t, args|
   draft_file = "_drafts/#{args.draft_post}"
   if File.file?(draft_file)
-    commit_changed_draft(args.draft_post, "_drafts")
+    #commit_changed_draft(args.draft_post, "_drafts")
     publish_draft(draft_file)
   else
     puts "#{draft_file} doesn't exist"

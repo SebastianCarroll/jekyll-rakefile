@@ -20,7 +20,7 @@ module JekyllRake
       File.open(full_path, 'w') do |f|
         f.puts "---"
         f.puts "title: \"#{@title}\""
-        f.puts "layout: default"
+        f.puts "layout: post"
         f.puts @yaml_cat if @yaml_cat != nil
         f.puts "date: #{@date}"
         f.puts "---"
