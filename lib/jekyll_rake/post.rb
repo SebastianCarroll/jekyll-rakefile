@@ -11,11 +11,26 @@ module JekyllRake
       # TODO: This method is still out of place
       set_post_dir_and_yaml_cat(dir)
       @file = write_new_draft
+      edit_file @file if @content.nil?
+      commit
+    end
+
+    def commit
+      if @post_dir.downcase.include? 'drafts'
+        # TODO: Break this out to improve readability somehow
+        # TODO: Do I want to be commiting all here?
+        # Must have cd and cd .. in same sh command as sh wont maintain dir over calls
+        system "cd #{@post_dir} && git add -A && git ci -m \"Add new draft: #{@title}\" && cd .."
+      end
+    end
+    def edit_file(title)
+      puts "tried editing"
+      system "vim \"#{title}\""
     end
 
     # TODO: No error handling
     def write_new_draft()
-      filename = get_unique_filename
+      filename = get_unique_filename ".md"
       full_path = File.join(@post_dir, filename)
       File.open(full_path, 'w') do |f|
         f.puts "---"
@@ -32,9 +47,9 @@ module JekyllRake
       full_path
     end
 
-    def  get_unique_filename()
+    def  get_unique_filename(post_ext)
       # TODO: Remove Global Variable reliance
-      filename = JekyllRake::Utils.slugify(@title) + $post_ext
+      filename = JekyllRake::Utils.slugify(@title) + post_ext
 
       # TODO: refactor - very difficult to understand without the comment
       # generate a unique filename appending a number
@@ -43,7 +58,7 @@ module JekyllRake
       while File.exists?(@post_dir + filename) do
         filename = @date[0..9] + "-" +
           File.basename(JekyllRake::Utils.slugify(@title)) + "-" + i.to_s +
-          $post_ext
+          post_ext
         i += 1
       end
       filename
