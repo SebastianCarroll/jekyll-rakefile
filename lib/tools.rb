@@ -1,9 +1,9 @@
 def commit_new_content(title, dir)
-  if dir.downcase.include? 'drafts'
+  if @post_dir.downcase.include? 'drafts'
     # TODO: Break this out to improve readability somehow
     # TODO: Do I want to be commiting all here?
     # Must have cd and cd .. in same sh command as sh wont maintain dir over calls
-    sh "cd #{dir} && git add -A && git ci -m \"Add new draft: #{title}\" && cd .."
+    system "cd #{@post_dir} && git add -A && git ci -m \"Add new draft: #{@title}\" && cd .."
   end
 end
 
