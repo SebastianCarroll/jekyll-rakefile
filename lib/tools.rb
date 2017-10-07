@@ -111,14 +111,6 @@ def file_change_ext(filename, newext)
   end
 end
 
-# Lists all unpublished posts
-def unpublished(draft_folder)
-  drafts = filenames_in "#{draft_folder}/*"
-  pubs = filenames_in "_posts/*"
-  # return filenames in drafts but not in pubs
-  (drafts - pubs).each{|f| puts f unless f == "README.md" }
-end
-
 #
 # General support functions
 #

@@ -36,11 +36,6 @@ task :insert_image do
   JekyllRake::ScreenCap.new(in_dir, out_dir)
 end
 
-desc 'List unpublished drafts'
-task :unpub do
-  unpublished "_drafts"
-end
-
 desc 'Copy post from _drafts to _posts. All work is done in _drafts(even updates/fixes) and then new versions are published to _posts'
 task :publish, [:draft_post]  do |t, args|
   draft_file = "_drafts/#{args.draft_post}"
